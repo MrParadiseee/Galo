@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #box{
+                margin: auto;
+                width:300px;
+                height:300px;
+                border:1px solid grey;
+                }
+            input{
+                width:100px;
+                height:100px;
+                border:1,0px solid grey;
+                font-size:70px;
+                }
+            #btnreset{
+                width:300px;
+                height:100px;
+                border:none;
+                font-size:50px;
+                background-color: #585858;
+                color: #efefef;
+                }
+            .classification{
+                width:300px;
+                height:30px;
+                border:none;
+                font-size:20px;
+                background-color: #ffffff;
+                color: #000000;
+                }
+        </style>
+        <script>
+            var player=0; position=[2,2,2,2,2,2,2,2,2]; x=0; o=0; e=0; v=0;
+            function start(){
+                document.getElementById("txtx").value = "JOGADOR X = "+x+ " VITORIAS";
+                document.getElementById("txto").value = "JOGADOR O = "+0+ " VITORIAS";
+                document.getElementById("txte").value = e+" EMPATES";
+                document.getElementById("txtm").value="A JOGAR - JOGADOR X";
+                document.getElementById("txtx").disabled="disabled";
+                document.getElementById("txto").disabled="disabled";
+                document.getElementById("txte").disabled="disabled";
+                document.getElementById("txtm").disabled="disabled";
+            }
+            function check(pos){
+                if (position[pos]==2){
+                    play(pos);
+                }
+            }
+            function play(pos){
+                position[pos]=player;
+                if (player==0){
+                    document.getElementById("btn"+pos).value="X";
+                    document.getElementById("btn"+pos).disabled="disabled";
+                    document.getElementById("txtm").value="A JOGAR - JOGADOR O";
+                    player=1;
+                    victorius(pos);
+                }
+                else{
+                    document.getElementById("btn"+pos).value="O";
+                    document.getElementById("btn"+pos).disabled="disabled";
+                    document.getElementById("txtm").value="A JOGAR - JOGADOR X";
+                    player=0;
+                    victorius(pos);
+                }
+            }
+           function verify(a,b,c){
+                if (position[a]==position[b] && position[a]==position[c]){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            function verifydraw(){
+                if (position[0]!==2 && position[1]!==2 && position[2]!==2 && position[3]!==2 && position[4]!==2 && position[5]!==2 && position[6]!==2 && position[7]!==2 && position[8]!==2){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            function victorius(pos){
+                switch (pos){
+                   case '0':                    
+                        if (verify(0,1,2)==true){
+                            winner();
+                        }                        
+                        else if (verify(0,3,6)==true){
+                            winner();
+                        }                        
+                        else if (verify(0,4,8)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   case '1':
+                        if (verify(1,0,2)==true){
+                            winner();
+                        }                        
+                        else if (verify(1,4,7)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   case '2':
+                        if (verify(2,1,0)==true){
+                            winner();
+                        }                        
+                        else if (verify(2,4,6)==true){
+                            winner();
+                        }                        
+                        else if (verify(2,5,8)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   case '3':
+                        if (verify(3,0,6)==true){
+                            winner();
+                        }                        
+                        else if (verify(3,4,5)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   case '4':
+                        if (verify(4,0,8)==true){
+                            winner();
+                        }                        
+                        else if (verify(4,1,7)==true){
+                            winner();
+                        }                        
+                        else if (verify(4,2,6)==true){
+                            winner();
+                        }
+                        else if (verify(4,3,5)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   case '5':
+                        if (verify(5,2,8)==true){
+                            winner();
+                        }                        
+                        else if (verify(5,3,4)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   case '6':
+                        if (verify(6,0,3)==true){
+                           winner();
+                        }                        
+                        else if (verify(6,4,2)==true){
+                            winner();
+                        }                        
+                        else if (verify(6,7,8)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   case '7':
+                        if (verify(7,6,8)==true){
+                            winner();
+                        }                        
+                        else if (verify(7,1,4)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   case '8':
+                        if (verify(8,6,7)==true){
+                            winner();
+                        }                        
+                        else if (verify(8,4,0)==true){
+                            winner();
+                        }                        
+                        else if (verify(8,5,2)==true){
+                            winner();
+                        }
+                        else if (verifydraw()==true){
+                            draw();
+                        }
+                   break;
+                   default:
+                }
+            }
+            function winner(){
+                if (player==1){
+                    alert("*X* VENCE!!!");
+                    x+=1;
+                    document.getElementById("txtx").value = "JOGADOR X = "+x+ " VITORIAS";
+                    reset();
+                }                        
+                else if (player==0){
+                    alert("*O* VENCE!!!");
+                    o+=1;
+                    document.getElementById("txto").value = "JOGADOR O = "+o+ " VITORIAS";
+                    reset();
+                }
+            }
+            function draw(){
+                alert("EMPATE!!!");
+                    e+=1;
+                    document.getElementById("txte").value = e+ " EMPATES";
+                    reset();
+            }
+            function reset(){
+                for(i=0;i<=8;i++){
+                    document.getElementById("btn"+i).value=" ";
+                    document.getElementById("btn"+i).disabled="";
+                    position=[2,2,2,2,2,2,2,2,2];
+                }
+            }
+        </script>
+    </head>
+    <body onload="start()">
+        <div id="box">
+            <input type="button" id="btn0" value=" " onclick="check('0')"/><input type="button" id="btn1" value=" " onclick="check('1')"/><input type="button" id="btn2" value=" " onclick="check('2')"/><input type="button" id="btn3" value=" " onclick="check('3')"/><input type="button" id="btn4" value=" " onclick="check('4')"/><input type="button" id="btn5" value=" " onclick="check('5')"/><input type="button" id="btn6" value=" " onclick="check('6')"/><input type="button" id="btn7" value=" " onclick="check('7')"/><input type="button" id="btn8" value=" " onclick="check('8')"/>
+        <div/>
+        <input type="button" id="btnreset" value="REINICIAR" onclick="reset()"/>
+        <hr>
+        <input class="classification" id="txtx"/>
+        <input class="classification" id="txto"/>
+        <input class="classification" id="txte"/>
+        <hr>
+        <input class="classification" id="txtm"/>
+        <hr>
+    <body/>
+<html/>
+            
